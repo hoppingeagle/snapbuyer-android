@@ -1,8 +1,11 @@
 package com.hoppingeagle.snapbuyer;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -10,6 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.NoTitle;
 import org.androidannotations.annotations.UiThread;
@@ -38,6 +42,12 @@ public class MainActivity extends ActionBarActivity {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
         .build();
         ImageLoader.getInstance().init(config);
+    }
+
+    @Click(R.id.buy)
+    void buy() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://allegro.pl/i5161590891.html"));
+        startActivity(intent);
     }
 
     @Background
