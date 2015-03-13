@@ -3,22 +3,22 @@ package com.hoppingeagle.snapbuyer;
 import java.io.Serializable;
 
 public class Auction implements Serializable {
-    private int mId;
-    private String mAuctionUrl;
+    private long mId;
+    private String mUrl;
 
-    public int getId() {
+    public long getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         mId = id;
     }
 
-    public String getAuctionUrl() {
-        return mAuctionUrl;
+    public String getUrl() {
+        return mUrl;
     }
 
-    public void setAuctionUrl(String auctionUrl) {
-        mAuctionUrl = auctionUrl;
+    public void setUrl(String url) {
+        mUrl = url;
     }
 }
