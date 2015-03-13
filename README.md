@@ -1,4 +1,4 @@
 # snapbuyer-android
 BrainCodeMobi Hackathon software
 
-test commit
+test commit - usune z moment
