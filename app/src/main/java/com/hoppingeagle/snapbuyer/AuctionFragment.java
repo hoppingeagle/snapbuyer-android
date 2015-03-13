@@ -36,7 +36,7 @@ public class AuctionFragment extends Fragment {
         mImageView = (ImageView) view.findViewById(R.id.af_image_id);
 
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(mAuction.getAuctionUrl(), mImageView);
+        imageLoader.displayImage(mAuction.getUrl(), mImageView);
 
         return view;
     }
