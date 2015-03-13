@@ -42,19 +42,19 @@ public class MainActivity extends ActionBarActivity {
         {
             Auction auction = new Auction();
             auction.setId(1);
-            auction.setAuctionUrl("http://img05.allegroimg.pl/photos/400x300/49/76/41/68/4976416833");
+            auction.setAuctionUrl("http://img16.allegroimg.pl/photos/oryginal/50/93/09/85/5093098540");
             auctionsMock.add(auction);
         }
         {
             Auction auction = new Auction();
             auction.setId(2);
-            auction.setAuctionUrl("http://img05.allegroimg.pl/photos/400x300/49/76/41/68/4976416833");
+            auction.setAuctionUrl("http://img09.allegroimg.pl/photos/oryginal/50/98/00/72/5098007215");
             auctionsMock.add(auction);
         }
         {
             Auction auction = new Auction();
             auction.setId(3);
-            auction.setAuctionUrl("http://img05.allegroimg.pl/photos/400x300/49/76/41/68/4976416833");
+            auction.setAuctionUrl("http://img03.allegroimg.pl/photos/oryginal/51/63/32/64/5163326440");
             auctionsMock.add(auction);
         }
         pagerAdapter.setNewData(auctionsMock);
