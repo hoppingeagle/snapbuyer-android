@@ -9,9 +9,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity {
@@ -19,49 +27,37 @@ public class MainActivity extends ActionBarActivity {
     @ViewById(R.id.view_pager_id)
     ViewPager mViewPager;
 
-    MyPagerAdapter mPagerAdapter;
+    @AfterInject
+    void afterInject() {
+        // Create global configuration and initialize ImageLoader with this config
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+        .build();
+        ImageLoader.getInstance().init(config);
+    }
 
     @AfterViews
     void afterViews() {
-        mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mPagerAdapter);
+        DynamicAuctionAdapter pagerAdapter = new DynamicAuctionAdapter(getSupportFragmentManager());
+        List<Auction> auctionsMock = new ArrayList<>(4);
+        {
+            Auction auction = new Auction();
+            auction.setId(1);
+            auction.setAuctionUrl("http://img05.allegroimg.pl/photos/400x300/49/76/41/68/4976416833");
+            auctionsMock.add(auction);
+        }
+        {
+            Auction auction = new Auction();
+            auction.setId(2);
+            auction.setAuctionUrl("http://img05.allegroimg.pl/photos/400x300/49/76/41/68/4976416833");
+            auctionsMock.add(auction);
+        }
+        {
+            Auction auction = new Auction();
+            auction.setId(3);
+            auction.setAuctionUrl("http://img05.allegroimg.pl/photos/400x300/49/76/41/68/4976416833");
+            auctionsMock.add(auction);
+        }
+        pagerAdapter.setNewData(auctionsMock);
+        mViewPager.setAdapter(pagerAdapter);
     }
-
-    public static class MyPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 3;
-
-        public MyPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        // Returns total number of pages
-        @Override
-        public int getCount() {
-            return NUM_ITEMS;
-        }
-
-        // Returns the fragment to display for that page
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0: // Fragment # 0 - This will show FirstFragment
-                    return AuctionFragment.newInstance(0, "Page # 1");
-                case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return AuctionFragment.newInstance(1, "Page # 2");
-                case 2: // Fragment # 1 - This will show SecondFragment
-                    return AuctionFragment.newInstance(2, "Page # 3");
-                default:
-                    return null;
-            }
-        }
-
-        // Returns the page title for the top indicator
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "Page " + position;
-        }
-
-    }
-
-
 }
