@@ -7,24 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class AuctionFragment extends Fragment {
-    // Store instance variables
-    private String title;
-    private int page;
+    private static final String AUCTION_ARG = "auction";
+    private Auction mAuction;
 
-//    @ViewById(R.id.af_image_id)
     ImageView mImageView;
 
-    public static AuctionFragment newInstance(int page, String title) {
+    public static AuctionFragment newInstance(Auction auction) {
         AuctionFragment fragmentFirst = new AuctionFragment();
         Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
+        args.putSerializable(AUCTION_ARG, auction);
         fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
@@ -32,8 +26,7 @@ public class AuctionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        page = getArguments().getInt("someInt", 0);
-        title = getArguments().getString("someTitle");
+        mAuction = (Auction) getArguments().getSerializable(AUCTION_ARG);
     }
 
 
@@ -42,7 +35,9 @@ public class AuctionFragment extends Fragment {
         View view = inflater.inflate(R.layout.auction_fragment, container, false);
         mImageView = (ImageView) view.findViewById(R.id.af_image_id);
 
-        mImageView.setImageDrawable(getResources().getDrawable(R.drawable.placeholder1));
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(mAuction.getAuctionUrl(), mImageView);
+
         return view;
     }
 }
