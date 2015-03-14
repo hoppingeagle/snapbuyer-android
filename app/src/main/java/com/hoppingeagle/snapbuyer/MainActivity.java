@@ -2,15 +2,12 @@ package com.hoppingeagle.snapbuyer;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
-import android.widget.TextView;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.andtinder.model.CardModel;
-import com.andtinder.view.CardContainer;
-import com.andtinder.view.SimpleCardStackAdapter;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -24,22 +21,22 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity {
-    @ViewById(R.id.card_container)
-    CardContainer mCardContainer;
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+
+    @ViewById(R.id.fling_container_id)
+    SwipeFlingAdapterView mFlingContainer;
 
     @RestService
     AuctionClient mAuctionClient;
 
-
-    TextView mTextView;
+    AuctionArrayAdapter mAdapter;
 
     List<Auction> mAuctions;
-
-    AuctionCardStackAdapter mAdapter;
 
     @AfterInject
     void afterInject() {
@@ -51,44 +48,70 @@ public class MainActivity extends ActionBarActivity {
 
     @Click(R.id.buy)
     void buy() {
-        if (mAdapter.getCount() == 0) {
+        mFlingContainer.getTopCardListener().selectRight();
+        if (true) {
             return;
         }
-        AuctionCard auctionCard = (AuctionCard) mAdapter.getItem(0);
-        String pageUrl = auctionCard.getAuction().getPageUrl();
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pageUrl));
-        startActivity(intent);
+//        AuctionCard auctionCard = (AuctionCard) mAdapter.getItem(0);
+//        String pageUrl = "http://google.com";//auctionCard.getAuction().getPageUrl();
+//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pageUrl));
+//        startActivity(intent);
     }
 
     @Background
     void loadData() {
+        Log.d(LOG_TAG, "Loading started.");
         mAuctions = mAuctionClient.getAuctions();
+        Log.d(LOG_TAG, "Loading finished.");
         updateAdapter();
     }
 
     @UiThread
     void updateAdapter() {
-        for (final Auction auction: mAuctions) {
-            final CardModel card = new AuctionCard(auction.getName(), "", auction.getPageUrl(), auction);
-            card.setOnCardDimissedListener(new CardModel.OnCardDimissedListener() {
-                @Override
-                public void onLike() {
-                    Toast.makeText(MainActivity.this, "Like: " + auction.getPageUrl(), Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onDislike() {
-                    Toast.makeText(MainActivity.this, "Dislike: " + auction.getPageUrl(), Toast.LENGTH_SHORT).show();
-                }
-            });
-            mAdapter.add(card);
-        }
-        mCardContainer.setAdapter(mAdapter);
+        mAdapter.setNewData(mAuctions);
     }
 
     @AfterViews
     void afterViews() {
-        mAdapter = new AuctionCardStackAdapter(this);
+        mAuctions = new LinkedList<>();
+        mAdapter = new AuctionArrayAdapter(this);
+
+        mFlingContainer.setAdapter(mAdapter);
+        mFlingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+            @Override
+            public void removeFirstObjectInAdapter() {
+                // this is the simplest way to delete an object from the Adapter (/AdapterView)
+                Log.d("LIST", "removed object!");
+                mAdapter.pop();
+            }
+
+            @Override
+            public void onLeftCardExit(Object dataObject) {
+                //Do something on the left!
+                //You also have access to the original object.
+                //If you want to use it just cast it (String) dataObject
+                Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRightCardExit(Object dataObject) {
+                Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdapterAboutToEmpty(int itemsInAdapter) {
+                // Ask for more data here
+//                al.add("XML ".concat(String.valueOf(i)));
+//                arrayAdapter.notifyDataSetChanged();
+                Log.d("LIST", "notified");
+//                i++;
+            }
+
+            @Override
+            public void onScroll(float v) {
+
+            }
+        });
 
         loadData();
     }
