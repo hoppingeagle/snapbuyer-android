@@ -15,7 +15,6 @@
         android:fontFamily="sans-serif-condensed"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/card_bg"
         tools:text="Title"
         android:padding="10dp"/>
 
@@ -24,7 +23,6 @@
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:layout_below="@id/auction_name_id"
-        android:background="@color/card_outline"
         />
 
     <ImageView
@@ -34,21 +32,20 @@
         android:layout_below="@id/divider_title"
         android:layout_alignWithParentIfMissing="true"
         android:scaleType="centerCrop"
-        tools:src="@drawable/picture1"/>
+        />
 
     <View
         android:id="@+id/divider_bottom"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:layout_below="@id/auction_image_id"
-        android:background="@color/card_outline" />
+        />
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="10dp"
         android:layout_alignBottom="@+id/image_1"
         android:layout_below="@+id/divider_bottom"
-        android:background="@color/card_bg"
         />
 
     <TextView
@@ -86,7 +83,7 @@
         android:layout_toLeftOf="@+id/btn_sep_2"
         android:background="?android:attr/selectableItemBackground"
         android:padding="10dp"
-        android:src="@drawable/camera"/>
+        />
 
     <View
         android:id="@+id/btn_sep_2"
@@ -106,7 +103,6 @@
         android:layout_below="@id/auction_image_id"
         android:background="?android:attr/selectableItemBackground"
         android:padding="10dp"
-        android:src="@drawable/people"/>
+        />
 
 </RelativeLayout>
-    <!-- From: file:/Users/enriquelopezmanas/AndroidStudioProjects/Swipeable-Cards/AndTinder/src/main/res/layout/std_card_inner.xml -->
