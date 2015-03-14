@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/divider_title"
-        android:layout_above="@+id/buy"
+        android:layout_above="@+id/buy_button_id"
         android:layout_centerHorizontal="true"
         android:scaleType="centerInside"
         tools:src="@drawable/picture1" />
@@ -43,7 +43,7 @@
         android:textSize="25dp"
         android:text="PRZEJDŹ DO AUKCJI"
         android:textColor="#ffffff"
-        android:id="@+id/buy"
+        android:id="@+id/buy_button_id"
         android:background="#FF6200"
         android:gravity="center"
         android:minHeight="60dp"

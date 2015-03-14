@@ -1,6 +1,9 @@
 package com.hoppingeagle.snapbuyer;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,14 @@ public class AuctionArrayAdapter extends ArrayAdapter<Auction> {
         TextView name = (TextView) view.findViewById(R.id.auction_name_id);
         name.setText(auction.getName());
 
+        TextView buy = (TextView) view.findViewById(R.id.buy_button_id);
+        buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAuction(auction);
+            }
+        });
+
         return view;
     }
 
@@ -44,5 +55,12 @@ public class AuctionArrayAdapter extends ArrayAdapter<Auction> {
     public void pop() {
         remove(getItem(0));
         notifyDataSetChanged();
+    }
+
+
+    private void openAuction(Auction auction) {
+        String pageUrl = auction.getPageUrl();
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pageUrl));
+        getContext().startActivity(intent);
     }
 }

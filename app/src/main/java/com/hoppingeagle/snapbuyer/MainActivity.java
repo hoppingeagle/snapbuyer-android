@@ -46,18 +46,6 @@ public class MainActivity extends ActionBarActivity {
         ImageLoader.getInstance().init(config);
     }
 
-    @Click(R.id.buy)
-    void buy() {
-        mFlingContainer.getTopCardListener().selectRight();
-        if (true) {
-            return;
-        }
-//        AuctionCard auctionCard = (AuctionCard) mAdapter.getItem(0);
-//        String pageUrl = "http://google.com";//auctionCard.getAuction().getPageUrl();
-//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pageUrl));
-//        startActivity(intent);
-    }
-
     @Background
     void loadData() {
         Log.d(LOG_TAG, "Loading started.");
