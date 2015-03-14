@@ -31,7 +31,7 @@ public class AuctionCardStackAdapter extends CardStackAdapter {
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
 
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(auctionCard.getAuction().getUrl(), image);
+        imageLoader.displayImage(auctionCard.getAuction().getImageUrl(), image);
 
         ((TextView)convertView.findViewById(R.id.title)).setText(model.getTitle());
         ((TextView)convertView.findViewById(R.id.description)).setText(model.getDescription());

@@ -1,13 +1,18 @@
 package com.hoppingeagle.snapbuyer;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.androidannotations.annotations.Click;
 
 public class AuctionFragment extends Fragment {
     private static final String AUCTION_ARG = "auction";
@@ -36,8 +41,9 @@ public class AuctionFragment extends Fragment {
         mImageView = (ImageView) view.findViewById(R.id.af_image_id);
 
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(mAuction.getUrl(), mImageView);
+        imageLoader.displayImage(mAuction.getImageUrl(), mImageView);
 
         return view;
     }
+
 }
