@@ -3,7 +3,11 @@ package com.hoppingeagle.snapbuyer;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Window;
+import android.widget.Toast;
 
+import com.andtinder.model.CardModel;
+import com.andtinder.view.CardContainer;
+import com.andtinder.view.SimpleCardStackAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -17,20 +21,20 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.WindowFeature;
 import org.androidannotations.annotations.rest.RestService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity {
-
-    @ViewById(R.id.view_pager_id)
-    ViewPager mViewPager;
+    @ViewById(R.id.card_container)
+    CardContainer mCardContainer;
 
     @RestService
     AuctionClient mAuctionClient;
 
     List<Auction> mAuctions;
 
-    DynamicAuctionAdapter mPagerAdapter;
+    AuctionCardStackAdapter mAdapter;
 
     @AfterInject
     void afterInject() {
@@ -48,13 +52,28 @@ public class MainActivity extends ActionBarActivity {
 
     @UiThread
     void updateAdapter() {
-        mPagerAdapter.setNewData(mAuctions);
-        mViewPager.setAdapter(mPagerAdapter);
+        for (final Auction auction: mAuctions) {
+            final CardModel card = new AuctionCard("Title", "AV", auction.getUrl(), auction);
+            card.setOnCardDimissedListener(new CardModel.OnCardDimissedListener() {
+                @Override
+                public void onLike() {
+                    Toast.makeText(MainActivity.this, "Like: " + auction.getUrl(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onDislike() {
+                    Toast.makeText(MainActivity.this, "Dislike: " + auction.getUrl(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            mAdapter.add(card);
+        }
+        mCardContainer.setAdapter(mAdapter);
     }
 
     @AfterViews
     void afterViews() {
-        mPagerAdapter = new DynamicAuctionAdapter(getSupportFragmentManager());
+        mAdapter = new AuctionCardStackAdapter(this);
+
         loadData();
     }
 }
