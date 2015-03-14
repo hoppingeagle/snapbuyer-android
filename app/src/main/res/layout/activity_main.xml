@@ -7,6 +7,15 @@
 
     >
 
+    <ProgressBar
+        android:id="@+id/cl_spinner"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        />
+
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         app:rotation_degrees="16"
         app:max_visible="4"
@@ -36,6 +45,8 @@
         android:layout_alignParentLeft="true"
         android:paddingLeft="30dp"
         android:paddingBottom="20dp"/>
+
+
 
 </RelativeLayout>
 
