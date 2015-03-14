@@ -16,6 +16,9 @@ public class Auction implements Serializable {
     private String mPageUrl;
     private String mName;
 
+    @JsonProperty("category_id")
+    private long mCategoryId;
+
     public long getId() {
         return mId;
     }
@@ -46,5 +49,13 @@ public class Auction implements Serializable {
 
     public void setName(String name) {
         mName = name;
+    }
+
+    public long getCategoryId() {
+        return mCategoryId;
+    }
+
+    public void setCategoryId(long categoryId) {
+        mCategoryId = categoryId;
     }
 }

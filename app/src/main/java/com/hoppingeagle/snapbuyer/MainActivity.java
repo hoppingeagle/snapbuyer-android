@@ -14,13 +14,16 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class MainActivity extends ActionBarActivity {
     @ViewById(R.id.fling_container_id)
     SwipeFlingAdapterView mFlingContainer;
 
+    @Bean
+    CategoryBean mCategoryBean;
 
     @RestService
     AuctionClient mAuctionClient;
@@ -38,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
     AuctionArrayAdapter mAdapter;
 
     List<Auction> mAuctions;
+
 
     @AfterInject
     void afterInject() {
@@ -51,6 +57,9 @@ public class MainActivity extends ActionBarActivity {
     void loadData() {
         Log.d(LOG_TAG, "Loading started.");
         mAuctions = mAuctionClient.getAuctions();
+
+        CategoryPreferences prefs = mCategoryBean.toPreferences();
+        mAuctionClient.storePrefrences(prefs);
         Log.d(LOG_TAG, "Loading finished.");
         updateAdapter();
     }
@@ -75,15 +84,14 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                //Do something on the left!
-                //You also have access to the original object.
-                //If you want to use it just cast it (String) dataObject
-                Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
+                Auction auction = (Auction) dataObject;
+                mCategoryBean.dislike(auction);
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
+                Auction auction = (Auction) dataObject;
+                mCategoryBean.like(auction);
             }
 
             @Override

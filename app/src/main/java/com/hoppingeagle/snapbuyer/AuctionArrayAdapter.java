@@ -51,12 +51,6 @@ public class AuctionArrayAdapter extends ArrayAdapter<Auction> {
         return view;
     }
 
-    public void setNewData(List<Auction> auctionList) {
-        clear();
-        addAll(auctionList);
-        notifyDataSetChanged();
-    }
-
     public void pop() {
         if (getCount() == 0) {
             return;
