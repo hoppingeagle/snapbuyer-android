@@ -17,6 +17,7 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity {
@@ -37,17 +38,28 @@ public class MainActivity extends ActionBarActivity {
 
     private AuctionArrayAdapter mAdapter;
 
-    private List<Auction> mAuctions;
+    private List<SliderItem> mItems;
+
+    private AtomicBoolean mLoading = new AtomicBoolean(false);
 
     @Background
     void loadData() {
+        if (mLoading.get()) {
+            return;
+        }
+        mLoading.set(true);
         Log.d(LOG_TAG, "Loading started.");
         if (mPreference.firstTime().getOr(true)) {
             mPreference.firstTime().put(false);
-            mAuctions = mAuctionClient.getAuctions();
+            mItems = new LinkedList<>();
+            mItems.add(new IntroItem(R.layout.fragment_onboarding_1));
+            mItems.add(new IntroItem(R.layout.fragment_onboarding_2));
+            mItems.add(new IntroItem(R.layout.fragment_onboarding_3));
+            mItems.addAll(mAuctionClient.getAuctions());
 
         } else {
-            mAuctions = mAuctionClient.getPreferredAuctions();
+            mItems = new LinkedList<>();
+            mItems.addAll(mAuctionClient.getPreferredAuctions());
         }
 
         CategoryPreferences prefs = mCategoryBean.toPreferences();
@@ -58,13 +70,14 @@ public class MainActivity extends ActionBarActivity {
 
     @UiThread
     void updateAdapter() {
-        mAdapter.addAll(mAuctions);
+        mAdapter.addAll(mItems);
         mAdapter.notifyDataSetChanged();
+        mLoading.set(false);
     }
 
     @AfterViews
     void afterViews() {
-        mAuctions = new LinkedList<>();
+        mItems = new LinkedList<>();
         mAdapter = new AuctionArrayAdapter(this);
 
         mFlingContainer.setAdapter(mAdapter);
@@ -76,18 +89,23 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                Auction auction = (Auction) dataObject;
-                mCategoryBean.dislike(auction);
+                if (dataObject instanceof Auction) {
+                    Auction auction = (Auction) dataObject;
+                    mCategoryBean.dislike(auction);
+                }
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Auction auction = (Auction) dataObject;
-                mCategoryBean.like(auction);
+                if (dataObject instanceof Auction) {
+                    Auction auction = (Auction) dataObject;
+                    mCategoryBean.like(auction);
+                }
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
+
                 loadData();
             }
 
