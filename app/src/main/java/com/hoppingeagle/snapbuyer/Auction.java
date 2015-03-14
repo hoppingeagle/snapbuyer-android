@@ -1,12 +1,18 @@
 package com.hoppingeagle.snapbuyer;
 
+import android.content.Context;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.squareup.picasso.Picasso;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Auction implements Serializable {
+public class Auction implements Serializable, SliderItem {
     private long mId;
 
     @JsonProperty("image_url")
@@ -57,5 +63,33 @@ public class Auction implements Serializable {
 
     public void setCategoryId(long categoryId) {
         mCategoryId = categoryId;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.auction_card_layout;
+    }
+
+    @Override
+    public void handleView(View view, final Context context) {
+        ImageView imageView = (ImageView) view.findViewById(R.id.auction_image_id);
+
+        if (getImageUrl() != null) {
+            Picasso.with(context).load(getImageUrl()).into(imageView);
+        } else {
+            imageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.no_photo));
+        }
+
+        TextView name = (TextView) view.findViewById(R.id.auction_name_id);
+        name.setText(getName());
+
+        TextView buy = (TextView) view.findViewById(R.id.buy_button_id);
+        buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.openAuction(Auction.this, context);
+            }
+        });
+
     }
 }
