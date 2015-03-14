@@ -15,6 +15,9 @@ public interface AuctionClient {
     @Get("/allegro/offers")
     List<Auction> getAuctions();
 
+    @Get("/allegro/preferredoffers")
+    List<Auction> getPreferredAuctions();
+
     @Post("/allegro/categories/preferences/store")
     void storePrefrences(CategoryPreferences preferences);
 

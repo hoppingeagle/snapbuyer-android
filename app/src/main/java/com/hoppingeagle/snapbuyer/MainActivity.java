@@ -1,11 +1,7 @@
 package com.hoppingeagle.snapbuyer;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -20,10 +16,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
-import org.springframework.util.MultiValueMap;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,9 +34,13 @@ public class MainActivity extends ActionBarActivity {
     @RestService
     AuctionClient mAuctionClient;
 
-    AuctionArrayAdapter mAdapter;
+    @Pref
+    StoredPreferences_ mPreference;
 
-    List<Auction> mAuctions;
+
+    private AuctionArrayAdapter mAdapter;
+
+    private List<Auction> mAuctions;
 
 
     @AfterInject
@@ -56,7 +54,13 @@ public class MainActivity extends ActionBarActivity {
     @Background
     void loadData() {
         Log.d(LOG_TAG, "Loading started.");
-        mAuctions = mAuctionClient.getAuctions();
+        if (mPreference.firstTime().getOr(true)) {
+            mPreference.firstTime().put(false);
+            mAuctions = mAuctionClient.getAuctions();
+
+        } else {
+            mAuctions = mAuctionClient.getPreferredAuctions();
+        }
 
         CategoryPreferences prefs = mCategoryBean.toPreferences();
         mAuctionClient.storePrefrences(prefs);
