@@ -21,20 +21,20 @@ public class AuctionCardStackAdapter extends CardStackAdapter {
     public View getCardView(int position, CardModel model, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(this.getContext());
-            convertView = inflater.inflate(R.layout.std_card_inner, parent, false);
+            convertView = inflater.inflate(R.layout.auction_card_layout, parent, false);
 
             assert convertView != null;
         }
 
         AuctionCard auctionCard = (AuctionCard) model;
 
-        ImageView image = (ImageView) convertView.findViewById(R.id.image);
+        ImageView image = (ImageView) convertView.findViewById(R.id.auction_image_id);
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(auctionCard.getAuction().getImageUrl(), image);
 
-        ((TextView)convertView.findViewById(R.id.title)).setText(model.getTitle());
-        ((TextView)convertView.findViewById(R.id.description)).setText(model.getDescription());
+        ((TextView)convertView.findViewById(R.id.auction_name_id)).setText(model.getTitle());
+        ((TextView)convertView.findViewById(R.id.auction_description_id)).setText(model.getDescription());
         return convertView;
     }
 }
