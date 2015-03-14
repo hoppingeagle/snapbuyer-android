@@ -34,7 +34,6 @@ public class AuctionCardStackAdapter extends CardStackAdapter {
         imageLoader.displayImage(auctionCard.getAuction().getImageUrl(), image);
 
         ((TextView)convertView.findViewById(R.id.auction_name_id)).setText(model.getTitle());
-        ((TextView)convertView.findViewById(R.id.auction_description_id)).setText(model.getDescription());
         return convertView;
     }
 }

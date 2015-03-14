@@ -13,22 +13,7 @@
         android:layout_above="@+id/buy"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:text="PRZEJDŹ DO AUKCJI"
-        android:textColor="#ffffff"
-        android:id="@+id/buy"
-        android:background="#FF6200"
-        android:gravity="center"
-        android:minHeight="60dp"
-        android:clickable="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        />
+
 
 
 </RelativeLayout>
