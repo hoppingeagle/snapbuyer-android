@@ -58,6 +58,9 @@ public class AuctionArrayAdapter extends ArrayAdapter<Auction> {
     }
 
     public void pop() {
+        if (getCount() == 0) {
+            return;
+        }
         remove(getItem(0));
         notifyDataSetChanged();
     }
