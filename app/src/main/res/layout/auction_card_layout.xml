@@ -36,7 +36,7 @@
         android:layout_below="@id/divider_title"
         android:layout_above="@+id/buy_button_id"
         android:layout_centerHorizontal="true"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         tools:src="@drawable/picture1" />
 
 
