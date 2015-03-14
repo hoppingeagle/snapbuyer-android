@@ -4,12 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
 
     <TextView
         android:id="@+id/auction_name_id"
         style="@android:style/TextAppearance.Large.Inverse"
-        android:textColor="@android:color/primary_text_light"
+        android:textColor="#FF6200"
         android:textSize="24sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed"
@@ -36,6 +37,8 @@
         android:layout_centerHorizontal="true"
         android:scaleType="centerInside"
         tools:src="@drawable/picture1" />
+
+
 
     <TextView
         android:layout_width="wrap_content"
