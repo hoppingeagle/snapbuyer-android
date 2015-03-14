@@ -56,7 +56,8 @@ public class MainActivity extends ActionBarActivity {
 
     @UiThread
     void updateAdapter() {
-        mAdapter.setNewData(mAuctions);
+        mAdapter.addAll(mAuctions);
+        mAdapter.notifyDataSetChanged();
     }
 
     @AfterViews
@@ -68,8 +69,6 @@ public class MainActivity extends ActionBarActivity {
         mFlingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
-                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-                Log.d("LIST", "removed object!");
                 mAdapter.pop();
             }
 
@@ -88,11 +87,7 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-//                al.add("XML ".concat(String.valueOf(i)));
-//                arrayAdapter.notifyDataSetChanged();
-                Log.d("LIST", "notified");
-//                i++;
+                loadData();
             }
 
             @Override
