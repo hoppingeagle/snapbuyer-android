@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+    android:background="#ffffff"
+
     >
 
     <com.andtinder.view.CardContainer
@@ -10,11 +12,28 @@
         android:id="@+id/card_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/buy"
+        android:layout_above="@+id/dislike"
+        android:paddingBottom="10dp"
         />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/like"
+        android:src="@mipmap/like_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingRight="30dp"
+        android:paddingBottom="20dp"/>
 
-
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dislike"
+        android:src="@mipmap/dislike_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="30dp"
+        android:paddingBottom="20dp"/>
 
 </RelativeLayout>
 
