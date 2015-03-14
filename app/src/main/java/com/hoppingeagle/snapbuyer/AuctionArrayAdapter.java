@@ -29,8 +29,13 @@ public class AuctionArrayAdapter extends ArrayAdapter<Auction> {
         View view = mInflater.inflate(R.layout.auction_card_layout, parent, false);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.auction_image_id);
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(auction.getImageUrl(), imageView);
+
+        if (auction.getImageUrl() != null) {
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            imageLoader.displayImage(auction.getImageUrl(), imageView);
+        } else {
+            imageView.setImageDrawable(getContext().getResources().getDrawable(R.mipmap.no_photo));
+        }
 
         TextView name = (TextView) view.findViewById(R.id.auction_name_id);
         name.setText(auction.getName());
