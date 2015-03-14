@@ -4,10 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -41,15 +38,6 @@ public class MainActivity extends ActionBarActivity {
     private AuctionArrayAdapter mAdapter;
 
     private List<Auction> mAuctions;
-
-
-    @AfterInject
-    void afterInject() {
-        // Create global configuration and initialize ImageLoader with this config
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-        .build();
-        ImageLoader.getInstance().init(config);
-    }
 
     @Background
     void loadData() {

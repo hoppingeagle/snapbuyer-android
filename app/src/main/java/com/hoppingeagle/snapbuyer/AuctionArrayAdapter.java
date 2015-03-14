@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -31,8 +31,7 @@ public class AuctionArrayAdapter extends ArrayAdapter<Auction> {
         ImageView imageView = (ImageView) view.findViewById(R.id.auction_image_id);
 
         if (auction.getImageUrl() != null) {
-            ImageLoader imageLoader = ImageLoader.getInstance();
-            imageLoader.displayImage(auction.getImageUrl(), imageView);
+            Picasso.with(getContext()).load(auction.getImageUrl()).into(imageView);
         } else {
             imageView.setImageDrawable(getContext().getResources().getDrawable(R.mipmap.no_photo));
         }
