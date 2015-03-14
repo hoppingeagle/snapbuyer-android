@@ -31,6 +31,7 @@ public class MainActivity extends ActionBarActivity {
     @ViewById(R.id.fling_container_id)
     SwipeFlingAdapterView mFlingContainer;
 
+
     @RestService
     AuctionClient mAuctionClient;
 
@@ -97,5 +98,15 @@ public class MainActivity extends ActionBarActivity {
         });
 
         loadData();
+    }
+
+    @Click(R.id.like)
+    void likeClick() {
+        mFlingContainer.getTopCardListener().selectRight();
+    }
+
+    @Click(R.id.dislike)
+    void dislikeClick() {
+        mFlingContainer.getTopCardListener().selectLeft();
     }
 }
