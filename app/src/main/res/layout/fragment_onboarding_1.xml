@@ -1,0 +1,26 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.hoppingeagle.snapbuyer.fragment_onboarding_1"
+             android:background="#FF6200"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Witaj w SnapBuyer"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Przesuń w prawo jak Ci się coś podoba"/>
+
+
+    <ImageView
+        android:layout_width=""
+        android:layout_height=""/>
+
+</FrameLayout>
